@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css" />
+    <title>LiveChat - Home</title>
+</head>
+
+<script src="/js/logic.js"></script>
+
+<body>
+    <div class="wrapper">
+        <p><strong><span>LiveChat</span></strong></p>
+
+        <!-- Textarea para mostrar mensajes del backend -->
+        <div class="backend-messages">
+            <textarea id="backendTextarea" rows="10" cols="50" readonly></textarea>
+        </div>
+
+        <table>
+            <tbody>
+                <tr>
+                    <td>Username:</td>
+                    <td>
+                        <div class="input-container">
+                            <input type="text" name="username">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Message:</td>
+                    <td>
+                        <div class="input-container">
+                            <input type="text" name="message">
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p><br></p>
+        <table>
+            <tbody>
+                <tr>
+                    <td><button onclick="sendMessage()" type="submit">Send</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>
