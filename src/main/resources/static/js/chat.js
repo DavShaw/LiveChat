@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var message = document.querySelector('input[type="text"][name="message"]');
     var user = document.querySelector('input[type="text"][name="username"]');
 
-    var socket = new WebSocket("ws://localhost:8080/livechat");
+    var socket = new WebSocket("ws://localhost:8080/chat");
 
     socket.onmessage = function(event) {
         var chat = document.getElementById('backendTextarea');

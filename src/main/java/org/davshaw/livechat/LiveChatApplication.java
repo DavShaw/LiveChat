@@ -1,13 +1,13 @@
-package org.davshaw.webs;
+package org.davshaw.livechat;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class WebsApplication {
+public class LiveChatApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(WebsApplication.class, args);
+		SpringApplication.run(LiveChatApplication.class, args);
 	}
 
 }
