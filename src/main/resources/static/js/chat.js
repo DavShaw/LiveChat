@@ -4,9 +4,9 @@ document.addEventListener('DOMContentLoaded', function() {
     var message = document.querySelector('input[type="text"][name="message"]');
     var user = document.querySelector('input[type="text"][name="username"]');
 
-    var socket = new WebSocket("ws://localhost:8080/chat");
+    var socket = new WebSocket("ws://localhost:8080/livechat");
 
-    socket.onmessage = function(event) {
+    socket.onmessage = function (event) {
         var chat = document.getElementById('backendTextarea');
         chat.value += event.data + '\n';
     }
@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
         var messageToSend = "[" + currentDate.toLocaleString() + "] " + user.value + " > " + message.value;
         socket.send(messageToSend);
         message.value = '';
-    
+
         if (firstTime) {
             firstTime = false;
             user.disabled = true;

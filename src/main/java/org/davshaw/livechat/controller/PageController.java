@@ -31,4 +31,8 @@ public class PageController {
         return "error";
     }
 
+    @GetMapping("/register")
+    public String register() {
+        return "register";
+    }
 }

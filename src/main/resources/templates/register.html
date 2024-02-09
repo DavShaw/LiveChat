@@ -5,27 +5,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/login.css">
-    <title>LiveChat - Login</title>
+    <title>LiveChat - Register</title>
 </head>
 
-
 <body>
-    <script src="/js/login.js"></script>
+    <script src="/js/register.js"></script>
     <div class="container">
-        <div class="login-container">
-            <h2>Login</h2>
-            <form id="loginForm">
+        <div class="register-container">
+            <h2>Register</h2>
+            <form id="registerForm">
+                <label for="displayName">Name:</label>
+                <input type="text" id="displayName" name="displayName" required>
+
                 <label for="username">User:</label>
                 <input type="text" id="username" name="username" required>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
 
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" required>
 
-                <button type="button" onclick="login()">Login</button>
+                <button type="button" onclick="register()">Register account</button>
             </form>
         </div>
     </div>
-
 </body>
 
 </html>
