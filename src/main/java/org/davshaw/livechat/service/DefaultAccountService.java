@@ -20,20 +20,6 @@ public class DefaultAccountService {
 
     private static final Encrypter encrypter = new Encrypter(3);
 
-    /*
-    
-    public Optional<Account> getAccountById(String id) {
-        if (!accountRepository.existsById(id)) {
-            String message = String.format(
-                "Account with ID %s doesn't exist.", id);
-            throw new NotFoundException(message);
-        }
-        return accountRepository.findById(id);
-    }
-    
-     */
-
-    
     private final AccountRepository accountRepository;
     /**
      * Get all accounts from the database.
@@ -58,8 +44,13 @@ public class DefaultAccountService {
         Optional<Account> account = accountRepository.findById(id);
 
         Account accountValue = account.get();
-        accountValue.setPassword(encrypter.decrypt(accountValue.getPassword()));
+
+        // Decrypt the account's email, password, id and name
         accountValue.setEmail(encrypter.decrypt(accountValue.getEmail()));
+        accountValue.setPassword(encrypter.decrypt(accountValue.getPassword()));
+        accountValue.setName(encrypter.decrypt(accountValue.getName()));
+        accountValue.setId(encrypter.decrypt(accountValue.getId()));
+
         return Optional.of(accountValue);
     }
 
@@ -77,6 +68,8 @@ public class DefaultAccountService {
 
         account.setPassword(encrypter.encrypt(account.getPassword()));
         account.setEmail(encrypter.encrypt(account.getEmail()));
+        account.setId(encrypter.encrypt(account.getId()));
+        account.setName(encrypter.encrypt(account.getName()));
 
         return accountRepository.save(account);
     }
@@ -87,7 +80,8 @@ public class DefaultAccountService {
      * @return
      */
     public Account updateAccount(Account account) {
-        if (!accountRepository.existsById(account.getId())) {
+        String encryptedId = encrypter.encrypt(account.getId());
+        if (!accountRepository.existsById(encryptedId)) {
             String message = String.format(
                 "Account with ID %s doesn't exist.", account.getId());
             throw new NotFoundException(message);
@@ -95,6 +89,8 @@ public class DefaultAccountService {
 
         account.setPassword(encrypter.encrypt(account.getPassword()));
         account.setEmail(encrypter.encrypt(account.getEmail()));
+        account.setId(encrypter.encrypt(account.getId()));
+        account.setName(encrypter.encrypt(account.getName()));
         
         return accountRepository.save(account);
     }

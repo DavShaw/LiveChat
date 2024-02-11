@@ -1,0 +1,2 @@
+* REMOVE: we failed trying to encrypt data then send it to the DB. So we need to remove the manual
+encryption and decryption of data. We will use any Hibernate implementation to encrypt
