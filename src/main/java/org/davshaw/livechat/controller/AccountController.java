@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.davshaw.livechat.entity.Account;
+import org.davshaw.livechat.exception.ConflictException;
+import org.davshaw.livechat.exception.NotFoundException;
 import org.davshaw.livechat.service.DefaultAccountService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,37 +28,50 @@ public class AccountController {
 
     @GetMapping("/get/{id}")
     public ResponseEntity<Account> getAccountById(@PathVariable String id) {
-        Optional<Account> account = accountService.getAccountById(id);
-        return account.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        try {
+            Optional<Account> account = accountService.getAccountById(id);
+            return account.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+                    .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        } catch (NotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
+
 
     @PostMapping("/create")
     public ResponseEntity<Account> createAccount(@RequestBody Account account) {
-        if (accountService.existsAccountById(account.getId())) {
+
+        try {
+            Account createdAccount = accountService.createAccount(account);
+            return new ResponseEntity<>(createdAccount, HttpStatus.CREATED);
+        } catch (ConflictException e) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
-        Account createdAccount = accountService.createAccount(account);
-        return new ResponseEntity<>(createdAccount, HttpStatus.CREATED);
+
+        
     }
 
-    @PutMapping("/update/{id}")
-    public ResponseEntity<Account> updateAccount(@PathVariable String id, @RequestBody Account account) {
-        if (!accountService.existsAccountById(id)) {
+    @PutMapping("/update")
+    public ResponseEntity<Account> updateAccount(@RequestBody Account account) {
+        try 
+        {
+            Account updatedAccount = accountService.updateAccount(account);
+            return new ResponseEntity<>(updatedAccount, HttpStatus.OK);
+
+        } catch (NotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        account.setId(id);
-        Account updatedAccount = accountService.updateAccount(account);
-        return new ResponseEntity<>(updatedAccount, HttpStatus.OK);
+        
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteAccount(@PathVariable String id) {
-        if (!accountService.existsAccountById(id)) {
+        try {
+            accountService.deleteAccount(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (NotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        accountService.deleteAccount(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping("/delete/all")
