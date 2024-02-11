@@ -23,6 +23,12 @@ public class DefaultAccountService {
     }
 
     public Optional<Account> getAccountById(String id) {
+        if (!accountRepository.existsById(id)) {
+            String message = String.format(
+                "Account with ID %s doesn't exist.", id);
+                
+            throw new IllegalArgumentException(message);
+        }
         return accountRepository.findById(id);
     }
 
