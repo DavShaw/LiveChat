@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.davshaw.livechat.repository.AccountRepository;
-
+import org.davshaw.livechat.security.Encrypter;
 import org.springframework.stereotype.Service;
 
 import org.davshaw.livechat.entity.Account;
@@ -17,6 +17,22 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @SuppressWarnings("null")
 public class DefaultAccountService {
+
+    private static final Encrypter encrypter = new Encrypter(3);
+
+    /*
+    
+    public Optional<Account> getAccountById(String id) {
+        if (!accountRepository.existsById(id)) {
+            String message = String.format(
+                "Account with ID %s doesn't exist.", id);
+            throw new NotFoundException(message);
+        }
+        return accountRepository.findById(id);
+    }
+    
+     */
+
     
     private final AccountRepository accountRepository;
     /**
@@ -38,7 +54,13 @@ public class DefaultAccountService {
                 "Account with ID %s doesn't exist.", id);
             throw new NotFoundException(message);
         }
-        return accountRepository.findById(id);
+
+        Optional<Account> account = accountRepository.findById(id);
+
+        Account accountValue = account.get();
+        accountValue.setPassword(encrypter.decrypt(accountValue.getPassword()));
+        accountValue.setEmail(encrypter.decrypt(accountValue.getEmail()));
+        return Optional.of(accountValue);
     }
 
     /**
@@ -52,6 +74,10 @@ public class DefaultAccountService {
                 "Account with ID %s already exists.", account.getId());
             throw new ConflictException(message);
         }
+
+        account.setPassword(encrypter.encrypt(account.getPassword()));
+        account.setEmail(encrypter.encrypt(account.getEmail()));
+
         return accountRepository.save(account);
     }
 
@@ -66,6 +92,10 @@ public class DefaultAccountService {
                 "Account with ID %s doesn't exist.", account.getId());
             throw new NotFoundException(message);
         }
+
+        account.setPassword(encrypter.encrypt(account.getPassword()));
+        account.setEmail(encrypter.encrypt(account.getEmail()));
+        
         return accountRepository.save(account);
     }
 
