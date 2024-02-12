@@ -7,6 +7,7 @@ import org.davshaw.livechat.entity.Account;
 import org.davshaw.livechat.exception.ConflictException;
 import org.davshaw.livechat.exception.NotFoundException;
 import org.davshaw.livechat.repository.AccountRepository;
+import org.davshaw.livechat.security.Encryptor;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,6 +15,8 @@ import org.springframework.stereotype.Service;
 @SuppressWarnings("null")
 public class DefaultAccountService {
 
+
+  private final Encryptor encrypter = new Encryptor();
   private final AccountRepository accountRepository;
 
   /**
@@ -34,11 +37,7 @@ public class DefaultAccountService {
       String message = String.format("Account with ID %s doesn't exist.", id);
       throw new NotFoundException(message);
     }
-
-    Optional<Account> account = accountRepository.findById(id);
-
-    Account accountValue = account.get();
-    return Optional.of(accountValue);
+    return accountRepository.findById(id);
   }
 
   /**
@@ -54,6 +53,13 @@ public class DefaultAccountService {
       );
       throw new ConflictException(message);
     }
+
+    String password = account.getPassword();
+    password = encrypter.encrypt(password);
+    String email = account.getEmail();
+    email = encrypter.encrypt(email);
+    account.setPassword(password);
+    account.setEmail(email);
 
     return accountRepository.save(account);
   }
@@ -71,6 +77,13 @@ public class DefaultAccountService {
       );
       throw new NotFoundException(message);
     }
+
+    String password = account.getPassword();
+    password = encrypter.encrypt(password);
+    String email = account.getEmail();
+    email = encrypter.encrypt(email);
+    account.setPassword(password);
+    account.setEmail(email);
 
     return accountRepository.save(account);
   }
