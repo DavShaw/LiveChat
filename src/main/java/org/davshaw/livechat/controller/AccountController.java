@@ -39,20 +39,17 @@ public class AccountController {
 
 
     @PostMapping("/create")
-    public ResponseEntity<Account> createAccount(@RequestBody Account account) {
-
+    public ResponseEntity<Account> createAccount( @RequestBody Account account) {
         try {
             Account createdAccount = accountService.createAccount(account);
             return new ResponseEntity<>(createdAccount, HttpStatus.CREATED);
         } catch (ConflictException e) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
-
-        
     }
 
     @PutMapping("/update")
-    public ResponseEntity<Account> updateAccount(@RequestBody Account account) {
+    public ResponseEntity<Account> updateAccount( @RequestBody Account account) {
         try 
         {
             Account updatedAccount = accountService.updateAccount(account);
