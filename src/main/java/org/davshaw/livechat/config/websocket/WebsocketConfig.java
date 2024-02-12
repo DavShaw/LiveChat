@@ -1,6 +1,6 @@
-package org.davshaw.livechat.config;
+package org.davshaw.livechat.config.websocket;
 
-import org.davshaw.livechat.service.ChatHandler;
+import org.davshaw.livechat.service.websocket.ChatHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;

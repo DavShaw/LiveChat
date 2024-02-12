@@ -1,4 +1,4 @@
-package org.davshaw.livechat.exception;
+package org.davshaw.livechat.exception.http;
 
 public class MethodNotAllowedException extends RuntimeException {
     public MethodNotAllowedException(String message) {

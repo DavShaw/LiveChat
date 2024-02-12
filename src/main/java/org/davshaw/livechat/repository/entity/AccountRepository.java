@@ -1,4 +1,4 @@
-package org.davshaw.livechat.repository;
+package org.davshaw.livechat.repository.entity;
 
 import org.davshaw.livechat.entity.Account;
 import org.springframework.data.jpa.repository.JpaRepository;

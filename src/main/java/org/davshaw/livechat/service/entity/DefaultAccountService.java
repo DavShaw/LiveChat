@@ -1,13 +1,13 @@
-package org.davshaw.livechat.service;
+package org.davshaw.livechat.service.entity;
 
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.davshaw.livechat.entity.Account;
-import org.davshaw.livechat.exception.ConflictException;
-import org.davshaw.livechat.exception.NotFoundException;
-import org.davshaw.livechat.repository.AccountRepository;
-import org.davshaw.livechat.security.Encryptor;
+import org.davshaw.livechat.exception.http.ConflictException;
+import org.davshaw.livechat.exception.http.NotFoundException;
+import org.davshaw.livechat.repository.entity.AccountRepository;
+import org.davshaw.livechat.security.encrypt.Encryptor;
 import org.springframework.stereotype.Service;
 
 @Service

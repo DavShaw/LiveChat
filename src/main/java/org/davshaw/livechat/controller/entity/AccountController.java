@@ -1,12 +1,12 @@
-package org.davshaw.livechat.controller;
+package org.davshaw.livechat.controller.entity;
 
 import java.util.List;
 import java.util.Optional;
 
 import org.davshaw.livechat.entity.Account;
-import org.davshaw.livechat.exception.ConflictException;
-import org.davshaw.livechat.exception.NotFoundException;
-import org.davshaw.livechat.service.DefaultAccountService;
+import org.davshaw.livechat.exception.http.ConflictException;
+import org.davshaw.livechat.exception.http.NotFoundException;
+import org.davshaw.livechat.service.entity.DefaultAccountService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

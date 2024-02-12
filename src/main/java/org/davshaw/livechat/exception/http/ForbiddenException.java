@@ -1,4 +1,4 @@
-package org.davshaw.livechat.exception;
+package org.davshaw.livechat.exception.http;
 
 public class ForbiddenException extends RuntimeException {
     public ForbiddenException(String message) {

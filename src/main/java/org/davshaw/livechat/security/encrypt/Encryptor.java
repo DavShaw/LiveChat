@@ -1,4 +1,4 @@
-package org.davshaw.livechat.security;
+package org.davshaw.livechat.security.encrypt;
 
 import org.jasypt.util.text.BasicTextEncryptor;
 
