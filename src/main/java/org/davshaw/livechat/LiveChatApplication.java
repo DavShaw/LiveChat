@@ -9,6 +9,7 @@ public class LiveChatApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(LiveChatApplication.class, args);
+    System.out.println("From now on, if you see anything below this message, that means its a Api Request");
 	}
 
 }

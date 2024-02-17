@@ -48,6 +48,16 @@ public class AccountController {
         }
     }
 
+    @GetMapping("/login/{id}/{password}")
+    public ResponseEntity<Boolean> loginAccount(@PathVariable String id, @PathVariable String password) {
+        try {
+            Boolean login = accountService.authenticateAccount(id, password);
+            return new ResponseEntity<>(login, HttpStatus.OK);
+        } catch (NotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
     @PutMapping("/update")
     public ResponseEntity<Account> updateAccount( @RequestBody Account account) {
         try 

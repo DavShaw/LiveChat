@@ -1,5 +1,6 @@
 package org.davshaw.livechat.service.entity;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -82,10 +83,24 @@ public class DefaultAccountService {
     password = encrypter.encrypt(password);
     String email = account.getEmail();
     email = encrypter.encrypt(email);
+    LocalDateTime now = LocalDateTime.now();
     account.setPassword(password);
     account.setEmail(email);
+    account.setUpdated(now);
 
     return accountRepository.save(account);
+  }
+
+  public Boolean authenticateAccount(String id, String password) {
+    if (!accountRepository.existsById(id)) {
+      String message = String.format("Account with ID %s doesn't exist.", id);
+      throw new NotFoundException(message);
+    }
+
+    Account account = accountRepository.findById(id).get();
+    String databasePassword = account.getPassword();
+    databasePassword = encrypter.decrypt(databasePassword);
+    return databasePassword.equals(password);
   }
 
   /**
